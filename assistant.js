@@ -13,6 +13,26 @@ const assistant = (() => {
 
   const answers = [
     {
+      terms: ["what is mw", "what is mw foundation", "about mw", "about the foundation", "who are you", "who is mw foundation", "meaning of mw foundation"],
+      reply: "MW Foundation is a Nairobi-based community nonprofit initiative that supports vulnerable children and youth. It helps children stay in school, build confidence, and access practical support such as learning materials, hygiene items, mentorship, and community care."
+    },
+    {
+      terms: ["mission", "goal", "purpose", "vision", "why was it founded", "why started"],
+      reply: "The purpose of MW Foundation is to become a helping hand for vulnerable children who need support, guidance, and basic resources. The foundation was inspired by lived experience and the belief that one act of support can change a young life."
+    },
+    {
+      terms: ["offer", "offers", "what does it offer", "what do you offer", "services", "activities", "program", "programs"],
+      reply: "MW Foundation offers school supplies, hygiene support such as sanitary pads, mentorship and motivational talks, community engagement, and support drives for vulnerable children and youth."
+    },
+    {
+      terms: ["benefit", "benefits", "advantage", "advantages", "impact", "importance", "why support", "outcome", "outcomes"],
+      reply: "The benefits of MW Foundation include improved school attendance, better access to learning materials, increased confidence among children, reduced pressure on families, stronger mentorship, dignity through hygiene support, and positive community impact."
+    },
+    {
+      terms: ["how does it help", "help children", "help youth", "support children", "support youth"],
+      reply: "MW Foundation helps children by providing essential school supplies, hygiene items, mentorship, motivation, and community support. These services reduce barriers that can keep vulnerable children away from school."
+    },
+    {
       terms: ["contact", "phone", "call", "whatsapp", "customer", "care", "number"],
       reply: `${contact} Use the WhatsApp button on this page for the fastest response.`
     },
@@ -23,10 +43,6 @@ const assistant = (() => {
     {
       terms: ["volunteer", "help", "join"],
       reply: "Volunteers can help with school supply distribution, mentorship sessions, community engagement, and activity documentation. Contact customer care on WhatsApp to get started."
-    },
-    {
-      terms: ["program", "programs", "offer", "services", "activities"],
-      reply: "MW Foundation focuses on school supplies, mentorship, hygiene support, and community engagement for vulnerable children and youth."
     },
     {
       terms: ["budget", "cost", "money", "ksh", "fund"],
@@ -77,7 +93,7 @@ const assistant = (() => {
       return match.reply;
     }
 
-    return `${contact} I can also help with programs, volunteering, donations, the budget, and proposal details.`;
+    return "MW Foundation is a Nairobi-based community initiative supporting vulnerable children and youth through school supplies, hygiene support, mentorship, and community engagement. I can also help with benefits, programs, donations, volunteering, budget, proposal details, and customer care.";
   }
 
   function ask(question) {
