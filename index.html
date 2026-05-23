@@ -270,5 +270,42 @@
       <p><a href="mailto:milkayahw@gmail.com">milkayahw@gmail.com</a> | Customer Care WhatsApp: <a href="https://wa.me/254700549161">0700&nbsp;549&nbsp;161</a></p>
     </div>
   </footer>
+
+  <section class="assistant-widget" aria-label="MW Foundation assistant">
+    <button class="assistant-toggle" type="button" aria-expanded="false" aria-controls="assistant-panel">
+      <span class="assistant-toggle-mark">AI</span>
+      <span>Assistant</span>
+    </button>
+
+    <div class="assistant-panel" id="assistant-panel" hidden>
+      <div class="assistant-header">
+        <div>
+          <p>MW Assistant</p>
+          <span>Customer care support</span>
+        </div>
+        <button class="assistant-close" type="button" aria-label="Close assistant">&times;</button>
+      </div>
+
+      <div class="assistant-messages" role="log" aria-live="polite">
+        <div class="assistant-message bot">
+          Hello, I can help with MW Foundation programs, donations, volunteering, proposal details, and WhatsApp customer care.
+        </div>
+      </div>
+
+      <div class="assistant-chips" role="group" aria-label="Quick questions">
+        <button type="button" data-question="How can I support MW Foundation?">Support</button>
+        <button type="button" data-question="How do I contact customer care?">Customer care</button>
+        <button type="button" data-question="What programs do you offer?">Programs</button>
+      </div>
+
+      <form class="assistant-form">
+        <label class="sr-only" for="assistant-input">Ask the assistant</label>
+        <input id="assistant-input" name="message" type="text" autocomplete="off" placeholder="Ask a question..." required>
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  </section>
+
+  <script src="assistant.js"></script>
 </body>
 </html>
