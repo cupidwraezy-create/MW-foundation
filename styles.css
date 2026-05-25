@@ -3,6 +3,13 @@
   font-family: Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   color: #f8f0df;
   background: #07100d;
+  /* High-ticket color layout tokens - premium theme additions */
+  --bg-main: #0a0a0a;
+  --bg-surface: #121212;
+  --border-subtle: #222222;
+  --text-primary: #f5f5f7;
+  --text-muted: #86868b;
+  --brand-gold: #e5c158;
   --bg: #07100d;
   --bg-2: #0d1712;
   --surface: #121a14;
@@ -92,6 +99,7 @@ textarea {
   z-index: 20;
   background: rgba(5, 8, 6, 0.92);
   border-bottom: 1px solid var(--line);
+  -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
 }
 
@@ -405,15 +413,17 @@ h3 {
 .program-card,
 .budget-panel,
 .contact-form {
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: linear-gradient(180deg, rgba(248, 240, 223, 0.06), rgba(248, 240, 223, 0.03));
-  box-shadow: var(--shadow);
+  /* Apply this to your Program & Budget item cards */
+  background: #111111;
+  border: 1px solid #222222;
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
 }
 
 .program-card {
   min-height: 260px;
-  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
@@ -421,7 +431,25 @@ h3 {
 
 .program-card p {
   margin: 0;
-  color: var(--muted);
+  color: var(--text-muted);
+}
+
+/* Luxury hover elevation */
+.program-card:hover {
+  transform: translateY(-5px);
+  background: #1a1a1a;
+  border-color: #d4af37;
+  box-shadow: 0 12px 30px rgba(212, 175, 55, 0.1);
+}
+
+/* Subtle left indicator bars matching your screenshot color codes */
+.program-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 24px; bottom: 24px;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: var(--brand-gold, #d4af37);
 }
 
 .program-accent {
@@ -592,6 +620,112 @@ tfoot td {
 .contact-form textarea {
   resize: vertical;
   min-height: 132px;
+}
+
+/* Premium Form Field Treatment */
+.form-group input,
+.form-group textarea,
+.contact-form .form-group input,
+.contact-form .form-group textarea {
+  width: 100%;
+  background: #141414;
+  border: 1px solid #2a2a2a;
+  color: var(--text-primary);
+  padding: 16px;
+  border-radius: 8px;
+  font-family: inherit;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Dynamic Focus Glow State */
+.form-group input:focus,
+.form-group textarea:focus,
+.contact-form .form-group input:focus,
+.contact-form .form-group textarea:focus {
+  outline: none;
+  border-color: var(--brand-gold);
+  box-shadow: 0 0 0 4px rgba(229, 193, 88, 0.15);
+}
+
+/* Hero ambient glow */
+.hero-container {
+  position: relative;
+  overflow: hidden;
+}
+.hero-container::after {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(214,175,55,0.08) 0%, transparent 70%);
+  top: 10%;
+  left: 5%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Premium Payment Component Styles */
+.premium-payment-card {
+  background: #121212;
+  border: 1px solid #222222;
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 450px;
+  margin: 18px auto 0 auto;
+}
+.amount-chips {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 20px 0;
+}
+.chip {
+  background: #1a1a1a;
+  border: 1px solid #333333;
+  color: #86868b;
+  padding: 10px 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+.chip.active, .chip:hover {
+  border-color: var(--brand-gold);
+  color: var(--brand-gold);
+  background: rgba(229, 193, 88, 0.05);
+}
+.payment-form-group { margin-bottom: 20px; text-align: left; }
+.payment-form-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; }
+.payment-form-group input { width: 100%; background: #1a1a1a; border: 1px solid #2a2a2a; color: #ffffff; padding: 14px; border-radius: 8px; }
+.payment-submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--brand-gold), #b89739);
+  color: #000000;
+  border: none;
+  padding: 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.2s ease;
+}
+.payment-submit-btn:hover { transform: scale(1.02); }
+
+.payment-hidden { display: none !important; }
+
+.payment-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.mpesa-btn {
+  background: linear-gradient(135deg,#2b9348,#1f7a32);
+  color: #fff;
 }
 
 .site-footer {
@@ -800,6 +934,278 @@ tfoot td {
   padding: 0 0.9rem;
 }
 
+.theme-toggle {
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 240, 223, 0.22);
+  background: rgba(248, 240, 223, 0.06);
+  color: #f8f0df;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+  background: rgba(248, 240, 223, 0.12);
+}
+
+.progress-card {
+  /* Premium Glowing Progress Styling */
+  background: #161616;
+  border: 1px solid #262626;
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.progress-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.progress-card-header h2 {
+  margin: 0.35rem 0 0;
+}
+
+.progress-stats {
+  text-align: right;
+  min-width: 170px;
+}
+
+.progress-stats strong {
+  display: block;
+  color: var(--gold-2);
+  font-size: 2.2rem;
+  line-height: 1.05;
+}
+
+.progress-stats span {
+  color: var(--muted);
+}
+
+.progress-bar-wrap {
+  margin-top: 1.75rem;
+}
+
+
+.meter-container {
+  background: #262626;
+  border-radius: 50px;
+  height: 16px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  margin: 20px 0;
+}
+.meter-bar {
+  background: linear-gradient(90deg, #d4af37, #f3e5ab);
+  height: 100%;
+  border-radius: 50px;
+  position: relative;
+  animation: loadProgress 1.5s ease-in-out forwards;
+  width: 10%;
+}
+.meter-glow {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shine 2s infinite linear;
+}
+
+@keyframes loadProgress {
+  from { width: 0%; }
+}
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.progress-bar-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.85rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.map-card {
+  padding: 2rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: linear-gradient(180deg, rgba(248, 240, 223, 0.06), rgba(248, 240, 223, 0.02));
+  box-shadow: var(--shadow);
+}
+
+#map {
+  min-height: 420px;
+  border-radius: 1rem;
+  margin-top: 1.5rem;
+}
+
+.faq-grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.faq-item {
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  overflow: hidden;
+  background: rgba(248, 240, 223, 0.05);
+  box-shadow: var(--shadow);
+}
+
+.faq-item button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.25rem;
+  background: transparent;
+  border: 0;
+  color: #f8f0df;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  text-align: left;
+}
+
+.faq-answer {
+  display: none;
+  padding: 0 1.25rem 1.25rem;
+  color: var(--muted);
+}
+
+.faq-answer.open {
+  display: block;
+}
+
+.faq-icon {
+  color: var(--gold-2);
+  font-weight: 900;
+}
+
+body.light {
+  color-scheme: light;
+  background:
+    radial-gradient(circle at 8% 4%, rgba(59, 130, 246, 0.08), transparent 24rem),
+    radial-gradient(circle at 92% 12%, rgba(16, 185, 129, 0.08), transparent 22rem),
+    #f8fafc;
+  color: #0f172a;
+}
+
+body.light .site-header {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(148, 163, 184, 0.32);
+}
+
+body.light h1,
+body.light h2,
+body.light h3 {
+  color: #0f172a;
+}
+
+body.light .eyebrow {
+  color: #2563eb;
+}
+
+body.light .hero-lede,
+body.light p,
+body.light .section-body p,
+body.light .section-heading h2 {
+  color: #475569;
+}
+
+body.light .button.secondary,
+body.light .button.secondary.on-dark {
+  background: rgba(15, 23, 42, 0.08);
+  color: #0f172a;
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+body.light .hero {
+  background: linear-gradient(180deg, #eff6ff 0%, #e2e8f0 100%);
+}
+
+body.light .hero-visual {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(148, 163, 184, 0.16);
+}
+
+body.light .section {
+  background: #f8fafc;
+}
+
+body.light .section-tinted {
+  background: #eef2ff;
+}
+
+body.light .drive-section {
+  background: rgba(229, 231, 235, 0.65);
+}
+
+body.light .partnership-section {
+  background: rgba(255, 255, 255, 0.92);
+  color: #0f172a;
+}
+
+body.light .contact-section {
+  background: #eef2ff;
+}
+
+body.light .program-card,
+body.light .budget-panel,
+body.light .contact-form,
+body.light .assistant-panel,
+body.light .map-card,
+body.light .progress-card,
+body.light .faq-item {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(148, 163, 184, 0.2);
+  color: #0f172a;
+}
+
+body.light table {
+  background: #f8fafc;
+}
+
+body.light td,
+body.light th {
+  color: #0f172a;
+}
+
+body.light .assistant-message.bot {
+  background: rgba(15, 23, 42, 0.06);
+  color: #0f172a;
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+body.light .assistant-message.user {
+  background: #facc15;
+  color: #0f172a;
+}
+
+body.light .assistant-form input {
+  background: #fff;
+  color: #0f172a;
+  border-color: rgba(148, 163, 184, 0.4);
+}
+
+body.light .assistant-panel {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 28px 80px rgba(15, 23, 42, 0.12);
+}
+
 @media (max-width: 1040px) {
   .header-inner {
     flex-wrap: wrap;
@@ -836,7 +1242,7 @@ tfoot td {
   }
 
   .header-inner {
-    min-height: auto;
+    height: auto;
     gap: 0.8rem;
   }
 
@@ -903,7 +1309,7 @@ tfoot td {
   }
 
   .program-card {
-    min-height: auto;
+    height: auto;
   }
 
   .button {

@@ -9,6 +9,8 @@
   >
   <title>MW Foundation | Back-to-School &amp; Empowerment</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -27,15 +29,21 @@
         <a href="#about">About</a>
         <a href="#programs">Programs</a>
         <a href="#drive">The Drive</a>
+        <a href="#map-section">Map</a>
+        <a href="#faq">FAQ</a>
         <a href="#contact">Contact</a>
       </nav>
 
+      <button class="theme-toggle" type="button" onclick="toggleDarkMode()" aria-label="Toggle light and dark theme">
+        Toggle theme
+      </button>
+      
       <a class="header-cta" href="mailto:milkayahw@gmail.com?subject=MW%20Foundation%20Partnership">Partner</a>
     </div>
   </header>
 
   <main id="main">
-    <section class="hero" id="top">
+    <section class="hero hero-container" id="top">
       <div class="container hero-layout">
         <div class="hero-copy">
           <p class="eyebrow">Community-based nonprofit initiative</p>
@@ -56,6 +64,33 @@
             alt="MW Foundation logo with people, leaves, homes, and community development tagline"
           >
         </figure>
+      </div>
+    </section>
+
+    <section class="section progress-section" aria-label="Donation progress">
+      <div class="container">
+        <!-- Enhanced Live Campaign Section -->
+        <div class="progress-card reveal">
+          <div class="progress-header">
+            <span class="badge red-badge">LIVE CAMPAIGN</span>
+            <h3>2026 Back-to-School Drive Progress</h3>
+          </div>
+          
+          <!-- Premium Progress Container -->
+          <div class="meter-container">
+            <div class="meter-bar">
+              <span class="meter-glow"></span>
+            </div>
+          </div>
+
+          <div class="progress-footer">
+            <p class="progress-desc">Tracking donations, supplies, and community outcomes.</p>
+            <div class="stats-block">
+              <span class="raised-amount">KSh 5,000</span>
+              <span class="goal-amount">raised of KSh 50,000 goal</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -198,6 +233,54 @@
       </div>
     </section>
 
+    <section class="section section-tinted map-section" id="map-section">
+      <div class="container">
+        <div class="section-heading narrow">
+          <p class="eyebrow">Impact footprint</p>
+          <h2>Our local and regional outreach map</h2>
+        </div>
+        <div class="map-card">
+          <p>
+            Explore the communities MW Foundation supports. Click markers to see project details and progress for each area.
+          </p>
+          <div id="map"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq-section" id="faq">
+      <div class="container">
+        <div class="section-heading narrow">
+          <p class="eyebrow">FAQ</p>
+          <h2>Common questions from supporters</h2>
+        </div>
+        <div class="faq-grid">
+          <article class="faq-item">
+            <button type="button" onclick="toggleFAQ(this)" aria-expanded="false">
+              How are donations used and monitored?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Donations are directed toward school supplies, hygiene kits, mentorship activities, community outreach and logistics. We keep supporters updated through email and WhatsApp.
+              </p>
+            </div>
+          </article>
+          <article class="faq-item">
+            <button type="button" onclick="toggleFAQ(this)" aria-expanded="false">
+              Can I volunteer or sponsor a drive?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Yes — volunteers, sponsors, and partners are welcome. Reach out through email or WhatsApp to join the next drive.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="section partnership-section">
       <div class="container partnership-layout">
         <div>
@@ -212,7 +295,47 @@
           </p>
           <div class="inline-actions">
             <a class="button primary" href="mailto:milkayahw@gmail.com?subject=MW%20Foundation%20Support">Email MW Foundation</a>
-            <a class="button secondary on-dark" href="https://wa.me/254700549161" target="_blank" rel="noreferrer">WhatsApp Customer Care</a>
+            <a class="button secondary on-dark" href="https://wa.me/254700549161" target="_blank" rel="noopener noreferrer">WhatsApp Customer Care</a>
+          </div>
+          <!-- Premium payment component -->
+          <div class="premium-payment-card reveal" aria-label="Donate securely">
+            <div class="payment-header">
+              <span class="badge gold-badge">SECURE DONATION</span>
+              <h3>Support the Back-to-School Drive</h3>
+              <p>Choose an amount to donate securely via Card or mobile money.</p>
+            </div>
+
+            <div class="amount-chips">
+              <button class="chip active" data-value="1000">KSh 1,000</button>
+              <button class="chip" data-value="2500">KSh 2,500</button>
+              <button class="chip" data-value="5000">KSh 5,000</button>
+              <button class="chip" data-value="custom">Custom</button>
+            </div>
+
+            <div class="payment-form-group">
+              <label for="donorEmail">Email Address</label>
+              <input type="email" id="donorEmail" placeholder="yourname@email.com" required>
+            </div>
+
+            <div class="payment-form-group">
+              <label for="mpesaPhone">Phone Number (M-Pesa)</label>
+              <input type="tel" id="mpesaPhone" placeholder="2547XXXXXXXX" pattern="\\d*" required>
+            </div>
+
+            <div class="payment-form-group payment-hidden" id="customAmountWrapper">
+              <label for="customAmount">Custom Amount (KSh)</label>
+              <input type="number" id="customAmount" placeholder="Enter amount">
+            </div>
+
+            <div class="payment-actions">
+              <button type="button" id="payButton" class="payment-submit-btn">
+              <span class="btn-text">Donate KSh <span id="btnAmountText">1,000</span></span>
+              <span class="lock-icon">🔒</span>
+              </button>
+              <button type="button" id="mpesaButton" class="payment-submit-btn mpesa-btn">
+                Pay with M-Pesa
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -238,7 +361,7 @@
               <span>Phone</span>
               <strong>0700&nbsp;549&nbsp;161</strong>
             </a>
-            <a href="https://wa.me/254700549161" target="_blank" rel="noreferrer">
+            <a href="https://wa.me/254700549161" target="_blank" rel="noopener noreferrer">
               <span>WhatsApp Customer Care</span>
               <strong>Chat on 0700&nbsp;549&nbsp;161</strong>
             </a>
@@ -246,15 +369,15 @@
         </div>
 
         <form class="contact-form" action="mailto:milkayahw@gmail.com" method="post" enctype="text/plain">
-          <label>
+          <label class="form-group">
             Name
             <input type="text" name="Name" autocomplete="name" required>
           </label>
-          <label>
+          <label class="form-group">
             Email or phone
             <input type="text" name="Contact" autocomplete="email" required>
           </label>
-          <label>
+          <label class="form-group">
             Message
             <textarea name="Message" rows="5" required></textarea>
           </label>
@@ -308,5 +431,172 @@
   </section>
 
   <script src="assistant.js"></script>
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <script>
+    // Payment widget: sets up the donation UI and Paystack handler (replace keys before going live)
+    document.addEventListener('DOMContentLoaded', function(){
+      const chips = document.querySelectorAll('.premium-payment-card .chip');
+      const customAmountWrapper = document.getElementById('customAmountWrapper');
+      const customAmountInput = document.getElementById('customAmount');
+      const btnAmountText = document.getElementById('btnAmountText');
+      const payButton = document.getElementById('payButton');
+      const donorEmail = document.getElementById('donorEmail');
+
+      if (!payButton) return;
+
+      let selectedAmount = 1000;
+
+      if (chips) {
+        chips.forEach(chip => {
+          chip.addEventListener('click', () => {
+            chips.forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            const value = chip.getAttribute('data-value');
+            if (value === 'custom') {
+              if (customAmountWrapper) customAmountWrapper.style.display = 'block';
+              selectedAmount = parseInt(customAmountInput?.value) || 0;
+            } else {
+              if (customAmountWrapper) customAmountWrapper.style.display = 'none';
+              selectedAmount = parseInt(value);
+              if (btnAmountText) btnAmountText.textContent = selectedAmount.toLocaleString();
+            }
+          });
+        });
+      }
+
+      customAmountInput?.addEventListener('input', (e) => {
+        selectedAmount = parseInt(e.target.value) || 0;
+        if (btnAmountText) btnAmountText.textContent = selectedAmount.toLocaleString();
+      });
+
+      payButton.addEventListener('click', () => {
+        const email = donorEmail?.value;
+        if (!email || selectedAmount <= 0) {
+          alert('Please enter a valid email address and donation amount.');
+          return;
+        }
+
+        if (!window.PaystackPop) {
+          alert('Payment gateway not loaded. Please try again later.');
+          return;
+        }
+
+        const handler = PaystackPop.setup({
+          key: 'pk_test_YOUR_PUBLIC_KEY', // replace with your Paystack public key
+          email: email,
+          amount: selectedAmount * 100,
+          currency: 'KES',
+          ref: 'MW-' + Math.floor((Math.random() * 1000000000) + 1),
+          channels: ['card', 'mobile_money'],
+          callback: function(response){
+            alert('Thank you for your generous support! Reference: ' + response.reference);
+            // TODO: update progress meter UI here if desired
+          },
+          onClose: function(){ alert('Transaction window closed.'); }
+        });
+
+        handler.openIframe();
+      });
+
+        // M-Pesa STK Push flow (calls your server endpoint)
+        const mpesaButton = document.getElementById('mpesaButton');
+        const mpesaPhone = document.getElementById('mpesaPhone');
+        mpesaButton?.addEventListener('click', async () => {
+          const phone = mpesaPhone?.value?.trim();
+          if (!phone || selectedAmount <= 0) {
+            alert('Please enter a valid phone number and donation amount.');
+            return;
+          }
+
+          try {
+            const resp = await fetch('/mpesa/stk', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ amount: selectedAmount, phone }),
+            });
+            const data = await resp.json();
+            if (!resp.ok) {
+              alert('Error initiating M-Pesa payment: ' + (data.error || JSON.stringify(data)));
+              return;
+            }
+
+            // STK Push should be triggered to the user's phone. Show server response for debugging.
+            alert('M-Pesa STK initiated. Response: ' + (data.CheckoutRequestID || data.ResponseDescription || JSON.stringify(data)));
+          } catch (err) {
+            console.error(err);
+            alert('Network error. Could not reach payment server.');
+          }
+        });
+    });
+
+  </script>
+  <script>
+    const themeToggleButton = document.querySelector('.theme-toggle');
+    const savedTheme = window.localStorage.getItem('mw-theme');
+
+    function setTheme(theme) {
+      document.body.classList.toggle('light', theme === 'light');
+      window.localStorage.setItem('mw-theme', theme);
+      if (themeToggleButton) {
+        themeToggleButton.textContent = theme === 'light' ? 'Dark mode' : 'Light mode';
+      }
+    }
+
+    function toggleDarkMode() {
+      const nextTheme = document.body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(nextTheme);
+    }
+
+    function toggleFAQ(button) {
+      const answer = button.nextElementSibling;
+      const isOpen = answer.classList.toggle('open');
+      button.setAttribute('aria-expanded', String(isOpen));
+      button.querySelector('.faq-icon').textContent = isOpen ? '−' : '+';
+    }
+
+    function initMap() {
+      if (!window.L) return;
+      const map = L.map('map', {
+        scrollWheelZoom: false,
+      }).setView([-1.286389, 36.817223], 6);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '&copy; OpenStreetMap contributors',
+      }).addTo(map);
+
+      const markers = [
+        {
+          coords: [-1.292066, 36.821945],
+          title: 'Nairobi Drive Hub',
+          description: 'School supply distribution, mentorship, and hygiene support in Nairobi.',
+        },
+        {
+          coords: [-0.091702, 34.767956],
+          title: 'Western Support Team',
+          description: 'Community outreach and education supply deliveries in western Kenya.',
+        },
+        {
+          coords: [-3.386925, 36.682995],
+          title: 'Coastal Outreach',
+          description: 'Local partners helping children with school and hygiene kits near the coast.',
+        },
+      ];
+
+      markers.forEach((item) => {
+        L.marker(item.coords)
+          .addTo(map)
+          .bindPopup(`<strong>${item.title}</strong><p>${item.description}</p>`);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setTheme(savedTheme === 'light' ? 'light' : 'dark');
+      initMap();
+    });
+
+    window.toggleDarkMode = toggleDarkMode;
+    window.toggleFAQ = toggleFAQ;
+  </script>
 </body>
 </html>
