@@ -527,6 +527,28 @@
             alert('Network error. Could not reach payment server.');
           }
         });
+
+        // Poll confirmed donations total and update meter
+        const meterBar = document.querySelector('.meter-bar');
+        const raisedAmountEl = document.querySelector('.raised-amount');
+        const goal = 50000; // KSh goal
+
+        async function refreshTotal() {
+          try {
+            const resp = await fetch('/donations/total');
+            if (!resp.ok) return;
+            const json = await resp.json();
+            const total = Number(json.total || 0);
+            const pct = Math.min(100, Math.round((total / goal) * 100));
+            if (meterBar) meterBar.style.width = pct + '%';
+            if (raisedAmountEl) raisedAmountEl.textContent = 'KSh ' + total.toLocaleString();
+          } catch (err) {
+            console.error('Failed to refresh donations total', err);
+          }
+        }
+
+        refreshTotal();
+        setInterval(refreshTotal, 15000);
     });
 
   </script>
