@@ -1,0 +1,15 @@
+{
+  "name": "mw-foundation-site",
+  "version": "1.0.0",
+  "description": "MW Foundation demo site with MPesa/STK and Paystack examples",
+  "main": "mpesa_server_example.js",
+  "scripts": {
+    "start": "node mpesa_server_example.js"
+  },
+  "dependencies": {
+    "base-64": "^1.0.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.2",
+    "node-fetch": "^2.6.7"
+  }
+}

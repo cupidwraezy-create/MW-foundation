@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "id": "seed-brian-wariara",
+    "amount": 5000,
+    "donor": "Brian Wariara",
+    "phone": "unknown",
+    "timestamp": "2026-05-25T00:00:00.000Z"
+  }
+]

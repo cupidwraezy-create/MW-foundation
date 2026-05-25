@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | MW Foundation</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="light">
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <strong>MW Foundation</strong>
+        <small>Admin dashboard</small>
+      </div>
+      <div style="display:flex; gap:1rem; align-items:center;">
+        <a href="index.html" class="button button-secondary">Visit site</a>
+        <button class="button" onclick="refreshDonations()">Refresh</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="section-heading narrow">
+        <p class="eyebrow">Admin</p>
+        <h1>Confirmed donations</h1>
+        <p class="section-copy">View saved donations, download a CSV, and watch the live confirmed total.</p>
+      </div>
+
+      <div class="program-card" style="padding:1.75rem; margin-bottom:1.5rem;">
+        <div style="display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; align-items:center;">
+          <div>
+            <p class="eyebrow">Live confirmed amount</p>
+            <h2 id="liveTotal">KSh 0</h2>
+          </div>
+          <button class="button button-primary" onclick="exportCsv()">Export CSV</button>
+        </div>
+      </div>
+
+      <div class="map-card">
+        <div class="table-scroll">
+          <table class="table" aria-label="Donation records">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Donor</th>
+                <th>Amount</th>
+                <th>Contact</th>
+                <th>Reference</th>
+              </tr>
+            </thead>
+            <tbody id="donationsBody">
+              <tr><td colspan="5">Loading donations…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const donationsBody = document.getElementById('donationsBody');
+    const liveTotal = document.getElementById('liveTotal');
+
+    function formatCurrency(value) {
+      return 'KSh ' + Number(value || 0).toLocaleString();
+    }
+
+    function formatDate(timestamp) {
+      if (!timestamp) return '-';
+      const date = new Date(timestamp);
+      return date.toLocaleString();
+    }
+
+    function renderDonations(donations) {
+      if (!donations || donations.length === 0) {
+        donationsBody.innerHTML = '<tr><td colspan="5">No confirmed donations yet.</td></tr>';
+        return;
+      }
+
+      donationsBody.innerHTML = donations
+        .slice()
+        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+        .map((donation) => {
+          const donor = donation.donor || donation.email || 'Supporter';
+          const contact = donation.phone || donation.email || '-';
+          return `
+            <tr>
+              <td>${formatDate(donation.timestamp)}</td>
+              <td>${donor}</td>
+              <td>${formatCurrency(donation.amount)}</td>
+              <td>${contact}</td>
+              <td>${donation.id || '-'}</td>
+            </tr>
+          `;
+        })
+        .join('');
+    }
+
+    async function refreshDonations() {
+      try {
+        const resp = await fetch('/donations/list');
+        if (!resp.ok) throw new Error('Failed to load donations');
+        const json = await resp.json();
+        const donations = json.donations || [];
+        const total = donations.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+        liveTotal.textContent = formatCurrency(total);
+        renderDonations(donations);
+      } catch (err) {
+        donationsBody.innerHTML = '<tr><td colspan="5">Unable to load donations.</td></tr>';
+        console.error(err);
+      }
+    }
+
+    function exportCsv() {
+      fetch('/donations/list')
+        .then((resp) => resp.json())
+        .then((data) => {
+          const rows = data.donations || [];
+          if (!rows.length) {
+            alert('No donations to export.');
+            return;
+          }
+          const headers = ['Date', 'Donor', 'Amount', 'Contact', 'Reference'];
+          const csv = [headers.join(',')].concat(
+            rows.map((item) => [
+              '"' + formatDate(item.timestamp) + '"',
+              '"' + (item.donor || item.email || 'Supporter') + '"',
+              item.amount,
+              '"' + (item.phone || item.email || '-') + '"',
+              '"' + (item.id || '-') + '"',
+            ].join(','))
+          ).join('\n');
+          const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'mw-foundation-donations.csv';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        })
+        .catch((err) => {
+          console.error(err);
+          alert('Failed to export CSV.');
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      refreshDonations();
+
+      if (window.EventSource) {
+        const source = new EventSource('/donations/stream');
+        source.onmessage = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            liveTotal.textContent = formatCurrency(data.total);
+          } catch (err) {
+            console.error('Invalid stream data', err);
+          }
+        };
+      }
+    });
+  </script>
+</body>
+</html>

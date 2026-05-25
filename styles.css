@@ -1042,9 +1042,12 @@ tfoot td {
   border-radius: 1rem;
   background: linear-gradient(180deg, rgba(248, 240, 223, 0.06), rgba(248, 240, 223, 0.02));
   box-shadow: var(--shadow);
+  overflow: hidden;
 }
 
 #map {
+  width: 100%;
+  height: 460px;
   min-height: 420px;
   border-radius: 1rem;
   margin-top: 1.5rem;
