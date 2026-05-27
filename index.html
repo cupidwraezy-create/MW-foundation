@@ -307,9 +307,9 @@
             </div>
 
             <div class="amount-chips">
-              <button class="chip active" data-value="1000">KSh 1,000</button>
-              <button class="chip" data-value="2500">KSh 2,500</button>
-              <button class="chip" data-value="5000">KSh 5,000</button>
+              <button class="chip active" data-value="10">$10</button>
+              <button class="chip" data-value="25">$25</button>
+              <button class="chip" data-value="50">$50</button>
               <button class="chip" data-value="custom">Custom</button>
             </div>
 
@@ -324,13 +324,13 @@
             </div>
 
             <div class="payment-form-group payment-hidden" id="customAmountWrapper">
-              <label for="customAmount">Custom Amount (KSh)</label>
+              <label for="customAmount">Custom Amount (USD)</label>
               <input type="number" id="customAmount" placeholder="Enter amount">
             </div>
 
             <div class="payment-actions">
               <button type="button" id="payButton" class="payment-submit-btn">
-              <span class="btn-text">Donate KSh <span id="btnAmountText">1,000</span></span>
+              <span class="btn-text">Donate $<span id="btnAmountText">10</span></span>
               <span class="lock-icon">🔒</span>
               </button>
               <button type="button" id="mpesaButton" class="payment-submit-btn mpesa-btn">
@@ -547,7 +547,7 @@
         // Poll confirmed donations total and update meter
         const meterBar = document.querySelector('.meter-bar');
         const raisedAmountEl = document.querySelector('.raised-amount');
-        const goal = 50000; // KSh goal
+        const goal = 1000; // USD goal
 
         async function refreshTotal() {
           try {
@@ -557,7 +557,7 @@
             const total = Number(json.total || 0);
             const pct = Math.min(100, Math.round((total / goal) * 100));
             if (meterBar) meterBar.style.width = pct + '%';
-            if (raisedAmountEl) raisedAmountEl.textContent = 'KSh ' + total.toLocaleString();
+            if (raisedAmountEl) raisedAmountEl.textContent = '$' + total.toLocaleString();
           } catch (err) {
             console.error('Failed to refresh donations total', err);
           }
