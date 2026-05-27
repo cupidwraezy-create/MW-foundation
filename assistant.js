@@ -45,7 +45,7 @@ const assistant = (() => {
       reply: "Volunteers can help with school supply distribution, mentorship sessions, community engagement, and activity documentation. Contact customer care on WhatsApp to get started."
     },
     {
-      terms: ["budget", "cost", "money", "ksh", "fund"],
+      terms: ["budget", "cost", "money", "usd", "fund"],
       reply: "The estimated drive budget is $1,000, with funds supporting school supplies, hygiene support, refreshments, logistics, and miscellaneous expenses."
     },
     {
