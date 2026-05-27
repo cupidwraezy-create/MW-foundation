@@ -32,7 +32,7 @@
         <div style="display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; align-items:center;">
           <div>
             <p class="eyebrow">Live confirmed amount</p>
-            <h2 id="liveTotal">KSh 0</h2>
+            <h2 id="liveTotal">$0</h2>
           </div>
           <button class="button button-primary" onclick="exportCsv()">Export CSV</button>
         </div>
@@ -64,7 +64,7 @@
     const liveTotal = document.getElementById('liveTotal');
 
     function formatCurrency(value) {
-      return 'KSh ' + Number(value || 0).toLocaleString();
+      return '$' + Number(value || 0).toLocaleString();
     }
 
     function formatDate(timestamp) {
