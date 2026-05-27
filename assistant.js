@@ -7,9 +7,9 @@ const assistant = (() => {
   const messages = document.querySelector(".assistant-messages");
   const chips = document.querySelectorAll("[data-question]");
 
-  const contact = "Customer care support is available on WhatsApp at 0700 549 161. You can also email milkayahw@gmail.com.";
+  const contact = "Customer care support is available on WhatsApp at 0700 549 161. You can also email mwfoundationm@gmail.com.";
   const whatsappLink = "https://wa.me/254700549161";
-  const emailLink = "mailto:milkayahw@gmail.com?subject=MW%20Foundation%20Support";
+  const emailLink = "mailto:mwfoundationm@gmail.com?subject=MW%20Foundation%20Support";
 
   const answers = [
     {
@@ -38,7 +38,7 @@ const assistant = (() => {
     },
     {
       terms: ["support", "donate", "donation", "sponsor", "sponsorship", "partner", "partnership"],
-      reply: "You can support MW Foundation through financial support, sponsorship, partnerships, or supplies for the Back-to-School & Empowerment Drive. The estimated launch budget is KSh 50,000."
+      reply: "You can support MW Foundation through financial support, sponsorship, partnerships, or supplies for the Back-to-School & Empowerment Drive. The estimated launch budget is $1,000."
     },
     {
       terms: ["volunteer", "help", "join"],
@@ -46,11 +46,11 @@ const assistant = (() => {
     },
     {
       terms: ["budget", "cost", "money", "ksh", "fund"],
-      reply: "The estimated drive budget is KSh 50,000: school supplies KSh 20,000, hygiene support KSh 10,000, refreshments KSh 8,000, logistics KSh 7,000, and miscellaneous KSh 5,000."
+      reply: "The estimated drive budget is $1,000, with funds supporting school supplies, hygiene support, refreshments, logistics, and miscellaneous expenses."
     },
     {
       terms: ["beneficiaries", "children", "youth", "age", "ages", "orphans"],
-      reply: "The target beneficiaries are orphans and vulnerable children from low-income households, especially children and youth ages 8-18."
+      reply: "The target beneficiaries are 20 to 30 orphans and vulnerable children from low-income households."
     },
     {
       terms: ["location", "where", "nairobi", "kenya"],
